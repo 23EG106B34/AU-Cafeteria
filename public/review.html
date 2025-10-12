@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Review / Thank you - AU Cafeteria</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Reviews & Order Confirmation</h1>
+    <nav class="topnav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div id="thankyou" style="display:none;">
+      <h2>Thank you for your order!</h2>
+      <p>Your token number is: <strong id="token-num"></strong></p>
+      <p>Show this token at the selected place to collect your item.</p>
+    </div>
+
+    <div id="review-form">
+      <h2>Leave a review</h2>
+      <form id="form-review">
+        <label for="place">Place</label>
+        <input id="place" name="place" required />
+
+        <label for="rating">Rating (1-5)</label>
+        <input id="rating" name="rating" type="number" min="1" max="5" required />
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="3"></textarea>
+
+        <button type="submit">Submit Review</button>
+      </form>
+
+      <div id="review-thanks" style="display:none;">
+        <p>Thanks for your feedback!</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Contact: +91 80000 22222</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Juice Point - AU Cafeteria</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Juice Point</h1>
+    <nav class="topnav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="review.html">Reviews</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Menu</h2>
+    <div class="cart-section" style="margin-bottom: 30px; text-align: center;">
+      <button id="view-cart-btn" class="order-btn" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%); padding: 15px 30px; font-size: 18px; border-radius: 25px; box-shadow: 0 6px 20px rgba(255,107,107,0.3);">
+        🛒 View Cart (0 items)
+      </button>
+      <button id="clear-cart-btn" class="order-btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 12px 20px; margin-left: 10px; display: none;">
+        Clear Cart
+      </button>
+    </div>
+
+    <div class="menu" data-place="Juice Point">
+      <div class="item">
+        <div><strong>Mango Juice</strong></div>
+        <div>₹40</div>
+        <button class="add-to-cart-btn" data-name="Mango Juice" data-price="40">Add to Cart</button>
+      </div>
+      <div class="item">
+        <div><strong>Lemon Soda</strong></div>
+        <div>₹25</div>
+        <button class="add-to-cart-btn" data-name="Lemon Soda" data-price="25">Add to Cart</button>
+      </div>
+      <div class="item">
+        <div><strong>Cold Coffee</strong></div>
+        <div>₹50</div>
+        <button class="add-to-cart-btn" data-name="Cold Coffee" data-price="50">Add to Cart</button>
+      </div>
+      <div class="item">
+        <div><strong>Watermelon Juice</strong></div>
+        <div>₹35</div>
+        <button class="add-to-cart-btn" data-name="Watermelon Juice" data-price="35">Add to Cart</button>
+      </div>
+      <div class="item">
+        <div><strong>Apple Juice</strong></div>
+        <div>₹45</div>
+        <button class="add-to-cart-btn" data-name="Apple Juice" data-price="45">Add to Cart</button>
+      </div>
+      <div class="item">
+        <div><strong>Pineapple Juice</strong></div>
+        <div>₹40</div>
+        <button class="add-to-cart-btn" data-name="Pineapple Juice" data-price="40">Add to Cart</button>
+      </div>
+      <div class="item">
+        <div><strong>Chocolate Milkshake</strong></div>
+        <div>₹60</div>
+        <button class="add-to-cart-btn" data-name="Chocolate Milkshake" data-price="60">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="cart-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; overflow-y: auto;">
+      <div style="background: white; margin: 5% auto; padding: 30px; border-radius: 20px; max-width: 600px; position: relative;">
+        <button id="close-cart-btn" style="position: absolute; top: 15px; right: 20px; background: #ff6b6b; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer;">×</button>
+        <h2 style="color: #2d3748; margin-bottom: 20px;">🛒 Your Cart</h2>
+        <div id="cart-items"></div>
+        <div id="cart-total" style="margin-top: 20px; padding: 15px; background: #f7f7f9; border-radius: 10px; font-weight: bold; font-size: 18px;"></div>
+        <div style="margin-top: 20px; text-align: center;">
+          <button id="place-order-btn" class="order-btn" style="padding: 15px 40px; font-size: 18px; margin-right: 10px;">Place Order</button>
+          <button id="continue-shopping-btn" class="order-btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Contact: +91 90000 11111</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
