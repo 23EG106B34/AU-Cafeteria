@@ -185,13 +185,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clear cart and redirect to thank you page
         cart = [];
         localStorage.removeItem('cart');
-        window.location.href = `thankyou.html?token=${resp.token}&place=${encodeURIComponent(place)}`;
+        window.location.href = `/thankyou?token=${resp.token}&place=${encodeURIComponent(place)}`;
       }
     });
   }
 
   // If on thank you page
-  if (location.pathname.endsWith('thankyou.html')) {
+  if (location.pathname === '/thankyou') {
     const params = new URLSearchParams(location.search);
     const token = params.get('token');
     const place = params.get('place');
@@ -218,13 +218,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const okBtn = document.getElementById('ok-btn');
     if (okBtn) {
       okBtn.addEventListener('click', () => {
-        window.location.href = 'index.html';
+        window.location.href = '/';
       });
     }
   }
 
   // If on review page with token, show thank you
-  if (location.pathname.endsWith('review.html')) {
+  if (location.pathname === '/review') {
     const params = new URLSearchParams(location.search);
     const token = params.get('token');
     const place = params.get('place');
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('review-form').style.display = 'none';
       document.getElementById('review-thanks').style.display = 'block';
       setTimeout(() => {
-        window.location.href = 'index.html';
+        window.location.href = '/';
       }, 1800);
     });
   }
