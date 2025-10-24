@@ -1,6 +1,3 @@
-// Page route handlers - converted from HTML files
-
-// Base HTML template
 const baseTemplate = (title, content, includeScript = false) => `
 <!doctype html>
 <html lang="en">

@@ -1,14 +1,8 @@
-// Frontend script to handle ordering, cart system, and reviews
-
-// Cart management
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-// Helper to do POST /order
 async function placeOrder(place, items) {
   try {
     const totalPrice = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const itemNames = items.map(item => `${item.name} (x${item.quantity})`).join(', ');
-
     const res = await fetch('/order', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -22,7 +16,6 @@ async function placeOrder(place, items) {
   }
 }
 
-// Update cart display
 function updateCartDisplay() {
   const cartBtn = document.getElementById('view-cart-btn');
   const clearBtn = document.getElementById('clear-cart-btn');
@@ -31,15 +24,12 @@ function updateCartDisplay() {
   if (cartBtn) {
     cartBtn.textContent = `🛒 View Cart (${itemCount} items)`;
   }
-
   if (clearBtn) {
     clearBtn.style.display = itemCount > 0 ? 'inline-block' : 'none';
   }
-
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Add item to cart
 function addToCart(name, price) {
   const existingItem = cart.find(item => item.name === name);
   if (existingItem) {
@@ -51,7 +41,6 @@ function addToCart(name, price) {
   showNotification(`${name} added to cart!`);
 }
 
-// Show notification
 function showNotification(message) {
   const notification = document.createElement('div');
   notification.textContent = message;
@@ -73,14 +62,12 @@ function showNotification(message) {
   }, 2000);
 }
 
-// Display cart modal
 function showCartModal() {
   const modal = document.getElementById('cart-modal');
   const cartItems = document.getElementById('cart-items');
   const cartTotal = document.getElementById('cart-total');
 
   if (!modal) return;
-
   if (cart.length === 0) {
     cartItems.innerHTML = '<p style="text-align: center; color: #666;">Your cart is empty</p>';
     cartTotal.textContent = 'Total: ₹0';
@@ -104,11 +91,9 @@ function showCartModal() {
     cartTotal.textContent = `Total: ₹${total}`;
     document.getElementById('place-order-btn').style.display = 'inline-block';
   }
-
   modal.style.display = 'block';
 }
 
-// Change item quantity in cart
 function changeQuantity(name, newQuantity) {
   if (newQuantity <= 0) {
     cart = cart.filter(item => item.name !== name);
@@ -122,16 +107,13 @@ function changeQuantity(name, newQuantity) {
   showCartModal();
 }
 
-// Clear cart
 function clearCart() {
   cart = [];
   updateCartDisplay();
   showCartModal();
 }
 
-// Attach event listeners
 document.addEventListener('DOMContentLoaded', () => {
-  // Add to cart buttons
   document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const name = btn.dataset.name;
@@ -140,19 +122,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // View cart button
   const viewCartBtn = document.getElementById('view-cart-btn');
   if (viewCartBtn) {
     viewCartBtn.addEventListener('click', showCartModal);
   }
 
-  // Clear cart button
   const clearCartBtn = document.getElementById('clear-cart-btn');
   if (clearCartBtn) {
     clearCartBtn.addEventListener('click', clearCart);
   }
 
-  // Close cart modal
   const closeCartBtn = document.getElementById('close-cart-btn');
   if (closeCartBtn) {
     closeCartBtn.addEventListener('click', () => {
@@ -160,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Continue shopping button
   const continueShoppingBtn = document.getElementById('continue-shopping-btn');
   if (continueShoppingBtn) {
     continueShoppingBtn.addEventListener('click', () => {
@@ -168,18 +146,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Place order button
   const placeOrderBtn = document.getElementById('place-order-btn');
   if (placeOrderBtn) {
     placeOrderBtn.addEventListener('click', async () => {
       if (cart.length === 0) return;
-
       const menu = document.querySelector('.menu');
       const place = menu ? menu.dataset.place : 'AU Cafeteria';
-
       const confirmMsg = `Place order for ${cart.length} items from ${place}?`;
       if (!confirm(confirmMsg)) return;
-
       const resp = await placeOrder(place, cart);
       if (resp && resp.token) {
         // Clear cart and redirect to thank you page
@@ -190,17 +164,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // If on thank you page
   if (location.pathname === '/thankyou') {
     const params = new URLSearchParams(location.search);
     const token = params.get('token');
     const place = params.get('place');
-
     if (token) {
       document.getElementById('order-token').textContent = token;
       document.getElementById('order-place').textContent = place || 'AU Cafeteria';
 
-      // Show order summary if we have cart data in sessionStorage
       const orderSummary = document.getElementById('order-summary');
       const cartData = sessionStorage.getItem('lastOrder');
       if (cartData && orderSummary) {
@@ -214,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // OK button to return to home
     const okBtn = document.getElementById('ok-btn');
     if (okBtn) {
       okBtn.addEventListener('click', () => {
@@ -223,7 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // If on review page with token, show thank you
   if (location.pathname === '/review') {
     const params = new URLSearchParams(location.search);
     const token = params.get('token');
@@ -232,15 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (token) {
       document.getElementById('thankyou').style.display = 'block';
       document.getElementById('token-num').textContent = token + ' (' + (place||'') + ')';
-      // hide review form
       document.getElementById('review-form').style.display = 'none';
     }
 
-    // review form submission
     const form = document.getElementById('form-review');
     form && form.addEventListener('submit', (ev) => {
       ev.preventDefault();
-      // simple client-side thank you
       document.getElementById('review-form').style.display = 'none';
       document.getElementById('review-thanks').style.display = 'block';
       setTimeout(() => {
@@ -249,7 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // contacts link
   const contactsLink = document.getElementById('contacts-link');
   if (contactsLink) {
     contactsLink.addEventListener('click', (e) => {
@@ -259,5 +224,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Make changeQuantity function global
 window.changeQuantity = changeQuantity;

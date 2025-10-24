@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const orderSchema = new mongoose.Schema({
   token: {
     type: String,
@@ -33,11 +32,8 @@ const orderSchema = new mongoose.Schema({
   }
 });
 
-// Create indexes for better query performance (token index is already created by unique constraint)
 orderSchema.index({ place: 1 });
 orderSchema.index({ orderDate: -1 });
-
-// Static method to generate next token
 orderSchema.statics.generateNextToken = async function() {
   const lastOrder = await this.findOne({}, {}, { sort: { 'token': -1 } });
   let lastTokenNumber = 1000;
@@ -48,7 +44,6 @@ orderSchema.statics.generateNextToken = async function() {
       lastTokenNumber = tokenNumber;
     }
   }
-
   return `AU${lastTokenNumber + 1}`;
 };
 
