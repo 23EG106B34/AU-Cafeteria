@@ -4,9 +4,13 @@ const cors = require('cors');
 require('dotenv').config();
 const connectDB = require('./config/database');
 const Order = require('./models/Order');
-const pages = require('./routes/pages');
+const pageRoutes = require('./routes/pages');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 connectDB();
 app.use(cors());
 app.use(express.json());
@@ -92,36 +96,6 @@ app.get('/orders/place/:place', async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => {
-  res.send(pages.homePage());
-});
-
-app.get('/about', (req, res) => {
-  res.send(pages.aboutPage());
-});
-
-app.get('/review', (req, res) => {
-  const token = req.query.token;
-  const place = req.query.place;
-  res.send(pages.reviewPage(token, place));
-});
-
-app.get('/thankyou', (req, res) => {
-  const token = req.query.token || 'AU1001';
-  const place = req.query.place || 'AU Cafeteria';
-  res.send(pages.thankyouPage(token, place));
-});
-
-app.get('/apj', (req, res) => {
-  res.send(pages.apjPage());
-});
-
-app.get('/dblock', (req, res) => {
-  res.send(pages.dblockPage());
-});
-
-app.get('/juice', (req, res) => {
-  res.send(pages.juicePage());
-});
+app.use('/', pageRoutes);
 
 app.listen(PORT, () => console.log(`AU Cafeteria server running on http://localhost:${PORT}`));
